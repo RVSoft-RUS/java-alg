@@ -23,6 +23,7 @@ object Lists {
         println(list5)
         val list6 = list2.dropAtMost(10)
         println(list6)
+
     }
 }
 
@@ -32,7 +33,7 @@ sealed class List<A> { // неявно абстрактный и имеет пр
 
         override fun toString() = "NIL"
 
-        override fun dropAtMost(n: Int): List<Nothing> = this
+        override fun drop(n: Int): List<Nothing> = this
     }
 
     private class Cons<A>(
@@ -49,7 +50,7 @@ sealed class List<A> { // неявно абстрактный и имеет пр
                 is Cons -> toString("$acc${list.head}, ", list.tail)
             }
 
-        override fun dropAtMost(n: Int): List<A> = if (n == 0) this else tail.dropAtMost(n - 1)
+        override fun drop(n: Int): List<A> = if (n == 0) this else tail.drop(n - 1)
     }
 
     abstract fun isEmpty(): Boolean
@@ -62,16 +63,24 @@ sealed class List<A> { // неявно абстрактный и имеет пр
     /**
      * Change element at first position or throw IllegalStateException if list is empty
      */
-    fun setHead(a: A): List<A> = when(this) {
+    fun setHead(a: A): List<A> = when (this) {
         Nil -> throw IllegalStateException("list is empty")
         is Cons -> tail.add(a)
     }
 
-    abstract fun dropAtMost(n: Int): List<A>
+    abstract fun drop(n: Int): List<A>
+
+    fun dropAtMost(n: Int): List<A> = Companion.dropAtMost(n, this)
+
     companion object {
         operator fun <A> invoke(vararg args: A): List<A> =
             args.foldRight(Nil as List<A>) { a: A, list: List<A> ->
                 Cons(a, list)
             }
+
+        tailrec fun <A> dropAtMost(n: Int, list: List<A>): List<A> = when (list) {
+            is Cons -> if (n <= 0) list else dropAtMost(n - 1, list.tail)
+            is Nil -> list
+        }
     }
 }
