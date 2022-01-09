@@ -23,11 +23,13 @@ object Lists {
         println(list5)
         val list6 = list2.dropAtMost(10)
         println(list6)
-
+        val list7 = list2.dropWhile { false }
+        println(list7)
+        println(List.sum(list7))
     }
 }
 
-sealed class List<A> { // неявно абстрактный и имеет приватный конструктор
+sealed class List<out A> { // неявно абстрактный и имеет приватный конструктор
     private object Nil : List<Nothing>() {
         override fun isEmpty() = true
 
@@ -37,8 +39,8 @@ sealed class List<A> { // неявно абстрактный и имеет пр
     }
 
     private class Cons<A>(
-        internal val head: A,
-        internal val tail: List<A>
+        val head: A,
+        val tail: List<A>
     ) : List<A>() {
         override fun isEmpty() = false
 
@@ -58,12 +60,12 @@ sealed class List<A> { // неявно абстрактный и имеет пр
     /**
      * Add an element at first position
      */
-    fun add(a: A): List<A> = Cons(a, this)
+    fun add(a: @UnsafeVariance A): List<A> = Cons(a, this)
 
     /**
      * Change element at first position or throw IllegalStateException if list is empty
      */
-    fun setHead(a: A): List<A> = when (this) {
+    fun setHead(a: @UnsafeVariance A): List<A> = when (this) {
         Nil -> throw IllegalStateException("list is empty")
         is Cons -> tail.add(a)
     }
@@ -71,6 +73,8 @@ sealed class List<A> { // неявно абстрактный и имеет пр
     abstract fun drop(n: Int): List<A>
 
     fun dropAtMost(n: Int): List<A> = Companion.dropAtMost(n, this)
+
+    fun dropWhile(p: (A) -> Boolean): List<A> = Companion.dropWhile(p, this)
 
     companion object {
         operator fun <A> invoke(vararg args: A): List<A> =
@@ -81,6 +85,17 @@ sealed class List<A> { // неявно абстрактный и имеет пр
         tailrec fun <A> dropAtMost(n: Int, list: List<A>): List<A> = when (list) {
             is Cons -> if (n <= 0) list else dropAtMost(n - 1, list.tail)
             is Nil -> list
+        }
+
+        tailrec fun <A> dropWhile(p: (A) -> Boolean, list: List<A>): List<A> = when (list) {
+            is Cons -> if (p(list.head)) dropWhile(p, list.tail) else list
+            is Nil -> list
+        }
+
+
+        fun sum(ints: List<Int>): Int = when(ints) {
+            is Nil -> 0
+            is Cons -> ints.head + sum(ints.tail)
         }
     }
 }
