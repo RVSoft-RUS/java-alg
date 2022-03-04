@@ -1,0 +1,9 @@
+каталог журнала /tmp/kafka-logs     log.dirs
+                /tmp/zookeeper      dataDir
+Настройки       <Каталог установки>/config  server.properties (log.dirs, dataDir)
+
+Основные комманды:
+    kafka-topics --bootstrap-server 10.53.47.199:9092
+        --create -topic testTopic
+        --delete
+    kafka-console-consumer --bootstrap-server 10.53.47.199:9092 --topic nameOfTopic --from-begining

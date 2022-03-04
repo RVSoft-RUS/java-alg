@@ -2,7 +2,6 @@ package ru.rvsoft.list
 
 import kotlin.IllegalStateException
 
-
 object Lists {
     @JvmStatic
     fun main(args: Array<String>) {
@@ -91,7 +90,6 @@ sealed class List<out A> { // неявно абстрактный и имеет 
             is Cons -> if (p(list.head)) dropWhile(p, list.tail) else list
             is Nil -> list
         }
-
 
         fun sum(ints: List<Int>): Int = when(ints) {
             is Nil -> 0
