@@ -8,6 +8,8 @@ public class Test {
         List<String> list2 = list.add("000");
         System.out.println(list2);
 
+        System.out.println(tryInt());
+
         try {
             try (SomeResource r = new SomeResource()) {
                 System.out.println("try");
@@ -18,6 +20,17 @@ public class Test {
             }
         } finally {
             System.out.println("finally");
+        }
+    }
+
+    private static int tryInt() {
+        try {
+            int x = 0;
+            return 1 / x;
+        } catch (Exception e) {
+            return 2;
+        } finally {
+            return 33; // returns 33
         }
     }
 }
