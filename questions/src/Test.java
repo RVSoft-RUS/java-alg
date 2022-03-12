@@ -1,6 +1,10 @@
 import ru.rvsoft.list.List;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
@@ -32,6 +36,20 @@ public class Test {
         } finally {
             return 33; // returns 33
         }
+    }
+
+    private void anyFun() throws FileNotFoundException {
+        FileInputStream fis = new FileInputStream("");
+        Map<FileInputStream, Object> map = new HashMap<>();
+        map.put(fis, null);
+        map.compute(fis, (x, y) -> {
+            try {
+                return x.equals(new FileInputStream("")) && y.equals(x);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            return y;
+        });
     }
 }
 

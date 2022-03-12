@@ -1,0 +1,39 @@
+           Инструкция по настройке SSL сертификата на стенде ИФТ
+
+    Создаем хранилище JKS, генерируем ключ, упаковываем ключ
+    ./keytool -genkey -alias "sbrd_dev" -storepass qwe123 -keystore sbrd_dev.jks -keyalg RSA -keysize 2048 -dname "CN=sbrd_dev,OU=00CA,O=Savings Bank of the russian Federation,C=RU"
+
+    Делаем запрос на подпись сертификата УЦ
+    ./keytool -keystore sbrd_dev.jks -storepass qwe123 -alias sbrd_dev -certreq -file sbrd_dev.csr
+
+    По итогу получаем файл sbrd_dev.csr (потребуется для УЦ)
+
+    Заводим в Service Manager ЗНО на основании шаблона № 10001534, во вложение прикрепляем файл sbrd_dev.csr
+
+    После выполнения ЗНО получаем сертификаты цепочки и подписанный сертификат. Файлы распаковываем для дальнейшего шага
+
+    Важно! полученные сертификаты будут в формате der.
+
+    Переделываем все полученные сертификаты с расширением .cer в pem формат (расширение .pem)
+    openssl x509 -inform der -in sbrd_dev.cer -out sbrd_dev.pem
+    openssl x509 -inform der -in "Sberbank Test Issuing CA 2.cer" -out "Sberbank Test Issuing CA 2.pem"
+    openssl x509 -inform der -in "Test Root CA 2.cer" -out "Test Root CA 2.pem"
+
+    Упаковываем полученные сертификаты в JKS (потребуется вводить пароль JKS в данном примере)
+    ./keytool -keystore sbrd_dev.jks -alias "Test Root CA 2" -import -file "/home/sbrd_dev/certs/Test Root CA 2.pem"
+    ./keytool -keystore sbrd_dev.jks -alias "Sberbank Test Issuing CA 2" -import -file "/home/sbrd_dev/certs/Sberbank Test Issuing CA 2.pem"
+    ./keytool -keystore sbrd_dev.jks -alias "sbrd_dev" -import -file "/home/sbrd_dev/certs/sbrd_dev.pem"
+
+    Создаем хранилище доверенных сертификатов truststore и импортируем туда сертификаты
+    ./keytool -keystore truststore.jks -alias truststoreA -import -file "/home/sbrd_dev/certs/Test Root CA 2.cer"
+    ./keytool -keystore truststore.jks -alias truststoreB -import -file "/home/sbrd_dev/certs/Sberbank Test Issuing CA 2.cer"
+
+    Необходимо добавить properties в приложение по примеру:
+    configProps.put("ssl.endpoint.identification.algorithm", "");
+    configProps.put("security.protocol", SECURITY_PROTOCOL_VALUE);
+    configProps.put("ssl.truststore.location", TRUST_STORE_LOCATION);
+    configProps.put("ssl.truststore.password", TRUST_STORE_PASSWORD);
+    configProps.put("ssl.key.password", KEY_PASSWORD);
+    configProps.put("ssl.keystore.password", KEY_STORE_PASSWORD);
+    configProps.put("ssl.keystore.location", KEY_STORE_LOCATION);
+

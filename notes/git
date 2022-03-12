@@ -1,0 +1,9 @@
+https://githowto.com/ru/
+https://learngitbranching.js.org/
+
+Удобнее пользоваться не хешами а тегами
+git tag v1-beta
+git checkout v1-beta
+
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
