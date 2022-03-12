@@ -25,6 +25,8 @@ object Lists {
         val list7 = list2.dropWhile { false }
         println(list7)
         println(List.sum(list7))
+
+        println("String_Q1".a1())
     }
 }
 
@@ -97,3 +99,7 @@ sealed class List<out A> { // неявно абстрактный и имеет 
         }
     }
 }
+
+fun String.a1(): String {
+    return this.lowercase().plus(":a1")
+} //при компиляции будет помещена в класс ListsKt.class пакет package ru.rvsoft.list
