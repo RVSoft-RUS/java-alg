@@ -1,0 +1,34 @@
+Работа с файлами excel xls
+<dependency>
+     <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml</artifactId>
+          <version>4.0.0</version>
+</dependency>
+
+private FormulaEvaluator evaluator;
+private DataFormatter dataFormatter;
+
+@EventListener(ApplicationReadyEvent.class)
+ public void doImportFromExcelFile() throws Exception {
+      Resource resource = new ClassPathResource("веса1.xlsx");
+      XSSFWorkbook workbook = new XSSFWorkbook(resource.getFile());
+      XSSFSheet sheet = workbook.getSheetAt(0);
+      evaluator = new XSSFFormulaEvaluator(workbook);     d
+      ataFormatter = new DataFormatter();
+      List<Weight> weightList = new ArrayList<>();
+      for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+               weightList.add(getWeights(sheet.getRow(i)));
+      }
+      weightList.forEach(weight -> repo.save(weight));
+ }
+
+ public Weight getWeights(Row row) {
+      Object[] rowColumns = new Object[row.getLastCellNum()];
+      for (int cellNum = 0; cellNum < row.getLastCellNum(); cellNum++) {
+           Cell cell = row.getCell(cellNum);
+           evaluator.evaluate(cell);
+           String cellValue = dataFormatter.formatCellValue(cell, evaluator);
+           rowColumns[cellNum] = cellValue;
+      }
+      return new Weight(rowColumns);
+ }
