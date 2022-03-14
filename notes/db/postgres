@@ -1,3 +1,3 @@
 Запустить в контейнере
     export POSTGRES_PASSWORD=postgres - можно сохр пароль в системной переменной
-    docker run -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres   (latest)
+    docker run -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres       |   (latest)

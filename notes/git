@@ -7,3 +7,18 @@ git checkout v1-beta
 
 git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
 git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+
+git branch XX - новая ветка  XX
+git checkout -b XX (branch + checkout)
+
+ |
+ |          git rebase main
+ o------
+ |      | c3 - остается существовать
+ |      o bugFix*
+ |
+ o main
+ --
+ |
+ o c3' bugFix       с3' - копия c3
+
