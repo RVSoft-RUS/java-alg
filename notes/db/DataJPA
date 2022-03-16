@@ -1,0 +1,8 @@
+Поиск по множеству критериев:
+Product p = new Product();
+p.setName("XXX");
+p.setPrice(124);
+Example<Product> example = Example.of(p);
+List<Product> items = productRepository.findAll(example); исп все поля !=null. Вместо примитивом подставятся 0
+_______________________________________________________________________________________________________________________
+

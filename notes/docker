@@ -10,7 +10,7 @@
   images      List images
   import      Import the contents from a tarball to create a filesystem image
   info        Display system-wide information
-  inspect     Return low-level information on Docker objects
+  inspect     Return low-level information on Docker objects в том числе ENV
   kill        Kill one or more running containers
   logs        Fetch the logs of a container
   pause       Pause all processes within one or more containers
@@ -20,12 +20,13 @@
   push        Push an image or a repository to a registry
   rename      Rename a container
   restart     Restart one or more containers
-  rm          Remove one or more containers
+  rm          Remove one or more containers     docker rm $(docker ps -a -q -f status=exited)
   rmi         Remove one or more images
-  run         Run a command in a new container
+  run         Run a command in a new container -p <внеш>:<внутр port>   -v /opt/datadir/:/var/lib/xx - (внеш:внутр)
   start       Start one or more stopped containers
   stats       Display a live stream of container(s) resource usage statistics
   stop        Stop one or more running containers
   unpause     Unpause all processes within one or more containers
   version     Show the Docker version information
   wait        Block until one or more containers stop, then print their exit codes
+

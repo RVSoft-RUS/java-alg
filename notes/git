@@ -17,8 +17,7 @@ git checkout -b XX (branch + checkout)
  |      | c3 - остается существовать
  |      o bugFix*
  |
- o main
- --
- |
- o c3' bugFix       с3' - копия c3
+ o-------
+ main    |
+         o c3' bugFix       с3' - копия c3
 
