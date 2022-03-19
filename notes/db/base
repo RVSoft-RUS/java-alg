@@ -1,1 +1,7 @@
 http://sqlfiddle.com/ - эмулятор БД (MySQL, postgres, oracle, MSSQL, SQLite)
+
+SELECT count(distinct col_name) -   кол-во уникальных
+
+Группировка по 15 минут (MS SQL)
+DATEDIFF(second, {d'1970-01-01'}, getDate() или дата тз табл)/900
+DATEADD(second, N * 900, {d'1970-01-01'})   -   обратно
