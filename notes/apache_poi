@@ -13,8 +13,8 @@ private DataFormatter dataFormatter;
       Resource resource = new ClassPathResource("веса1.xlsx");
       XSSFWorkbook workbook = new XSSFWorkbook(resource.getFile());
       XSSFSheet sheet = workbook.getSheetAt(0);
-      evaluator = new XSSFFormulaEvaluator(workbook);     d
-      ataFormatter = new DataFormatter();
+      evaluator = new XSSFFormulaEvaluator(workbook);     
+      dataFormatter = new DataFormatter();
       List<Weight> weightList = new ArrayList<>();
       for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                weightList.add(getWeights(sheet.getRow(i)));
