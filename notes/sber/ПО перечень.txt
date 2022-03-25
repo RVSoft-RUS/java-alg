@@ -1,0 +1,11 @@
+Git
+dbeaver (pgAdmin)
+jdk
+postman
+docker desktop
+idea
+putty
+homebrew
+SberLexi
+Клиент печати SafeQ
+
