@@ -1,11 +1,11 @@
 Git
 dbeaver (pgAdmin)
 jdk
-postman
+postman / SoapUI
 docker desktop
 idea
 putty
 homebrew
 SberLexi
 Клиент печати SafeQ
-
+Notepad++

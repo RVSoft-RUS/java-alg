@@ -22,3 +22,7 @@ git checkout -b XX (branch + checkout)
  main    |
          o c3' bugFix       с3' - копия c3
 
+
+Если ругается на пароль? То сгенерироваить РАТ (токен) и указать вместо пароля
+
+git config --global http.sslVerify false - если нужно отключить проверку сертификатов
