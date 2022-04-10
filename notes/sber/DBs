@@ -1,0 +1,6 @@
+DB dev:
+DICT
+DCM_PROBLEMS (Username/Password) одинаково DCM_PROBLEMS
+Hostname:   tkled-sbox00004.vm.esrt.clous.sbrf.ru
+Port:       1521
+SID:        askdb
