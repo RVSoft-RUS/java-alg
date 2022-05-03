@@ -5,3 +5,5 @@ https://confluence.sberbank.ru/pages/viewpage.action?pageId=3735623451
 Ссылка для гостевых подключений:
 https://join.sber.ru/meeting/877020318?secret=b67bf61e261edf1eb57caef25e363ccac4209106
 
+http://s-gate.sigma.sbrf.ru
+http://a-gate.sigma.sbrf.ru
