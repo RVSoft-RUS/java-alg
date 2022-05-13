@@ -1,0 +1,8 @@
+ssh login@server_address
+exit
+
+копировать файл
+scp -P port login@server_address:path1 path2 -  с сервера path1 на клиента path2
+scp -P port path2 login@server_address:path1 -  с клиента path2 на сервер path1
+копировать папку рекурсивно
+scp -r my-dir login@server_address:~/ - в домашний каталог
