@@ -9,6 +9,9 @@ git checkout v1-beta
 git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
 git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
 
+cab-wsm-0070334:problemsmonitoring 19991588$ git config --global user.name "Смирнов Роман Валентинович [ДЗО]"
+cab-wsm-0070334:problemsmonitoring 19991588$ git config --global user.email "RValeSmirnov@sberbank.ru"
+
 git branch XX - новая ветка  XX
 git checkout -b XX (branch + checkout)
 
