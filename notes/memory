@@ -1,1 +1,6 @@
 -XX:+HeapDumpOnOutOfMemoryError
+
+    По статистике OpenJDK таких случаев мало, поэтому StringDeduplication по умолчанию отключен. Для активации добавьте при запуске VM флажок:
+-XX:+UseStringDeduplication
+        Чтобы посмотреть, сколько памяти сэкономил Deduplication, можно вывести статистику Xlog:
+-Xlog:stringdedup*=debug
