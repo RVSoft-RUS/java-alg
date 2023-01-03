@@ -1,4 +1,4 @@
-package collections;
+package collections.collector;
 
 import java.util.*;
 import java.util.function.BiFunction;
