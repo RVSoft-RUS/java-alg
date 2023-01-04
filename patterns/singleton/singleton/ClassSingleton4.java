@@ -1,4 +1,4 @@
-package singleton;
+package singleton.singleton;
 
 public class ClassSingleton4 {
     private static ClassSingleton4 instance = new ClassSingleton4();

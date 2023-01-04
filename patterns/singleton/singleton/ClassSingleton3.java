@@ -1,4 +1,4 @@
-package singleton;
+package singleton.singleton;
 
 public class ClassSingleton3 {
     private final String info = "Решение подходит если конструктор класса" +

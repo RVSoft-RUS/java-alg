@@ -1,11 +1,11 @@
-package singleton;
+package singleton.singleton;
 
 public enum EnumSingleton {
     INSTANCE("Initial class info");
 
     private String info;
 
-    private EnumSingleton(String info) {
+    EnumSingleton(String info) {
         this.info = info;
     }
 
