@@ -9,6 +9,7 @@ public class MyClassLoader extends ClassLoader{
     public Class<?> loadClass(String name) throws ClassNotFoundException {
         if (name.equals("MyRunnable")) {
             try (InputStream stream = MyRunnable.class.getResourceAsStream("MyRunnable.class")) {
+                assert stream != null;
                 byte[] classData = stream.readAllBytes();
                 return defineClass("MyRunnable", classData, 0, classData.length);
             } catch (IOException e) {
