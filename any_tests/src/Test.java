@@ -1,3 +1,5 @@
+package src;
+
 public class Test {
     public static void main(String[] args) {
         Object[] objects =new Object[5];
