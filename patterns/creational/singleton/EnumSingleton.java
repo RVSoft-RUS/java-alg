@@ -1,4 +1,4 @@
-package singleton.singleton;
+package singleton;
 
 public enum EnumSingleton {
     INSTANCE("Initial class info");
