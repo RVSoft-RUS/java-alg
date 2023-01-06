@@ -1,4 +1,7 @@
 package adapter;
+/**
+ * помогает объектам с несовместимыми интерфейсами работать вместе
+ */
 
 public class Example {
     public static void main(String[] args) {
