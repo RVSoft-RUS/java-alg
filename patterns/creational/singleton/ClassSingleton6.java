@@ -1,4 +1,4 @@
-package singleton.singleton;
+package singleton;
 
 public class ClassSingleton6 { //лучше делать final
     private static volatile ClassSingleton6 instance;

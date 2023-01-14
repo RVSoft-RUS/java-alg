@@ -1,0 +1,6 @@
+Андрей Паньгин youtube
+https://www.youtube.com/watch?v=iNcStuF1j3E про async-profiler после 1 часа
+
+@Profiler над методом выводит в лог статистику
+
+java -XX:StartFlightRecording

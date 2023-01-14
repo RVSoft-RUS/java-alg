@@ -1,4 +1,4 @@
-package singleton.singleton;
+package singleton;
 
 public class ClassSingleton2 {
     private static final ClassSingleton2 INSTANCE = new ClassSingleton2();
