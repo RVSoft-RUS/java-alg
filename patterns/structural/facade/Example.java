@@ -1,4 +1,4 @@
-package facade;
+package structural.facade;
 
 /**
  * Скрывает сложную систему классов приводя все вызовы к одному объекту.

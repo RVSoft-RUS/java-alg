@@ -1,4 +1,4 @@
-package adapter;
+package structural.adapter;
 /**
  * помогает объектам с несовместимыми интерфейсами работать вместе
  */
