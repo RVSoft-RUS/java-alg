@@ -12,6 +12,7 @@ public class Test {
         List<String> list2 = list.add("000");
         System.out.println(list2);
 
+        tryThrow();
         System.out.println(tryInt());
 
         try {
@@ -35,6 +36,17 @@ public class Test {
             return 2;
         } finally {
             return 33; // returns 33
+        }
+    }
+
+    private static int tryThrow() {
+        try {
+            int x = 0;
+            return 1 / x;
+        } catch (Exception e) {
+            throw new RuntimeException("Catch");
+        } finally {
+            throw new RuntimeException("Finally");
         }
     }
 
