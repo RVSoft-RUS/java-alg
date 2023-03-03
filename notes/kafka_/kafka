@@ -7,3 +7,5 @@
         --create -topic testTopic
         --delete
     kafka-console-consumer --bootstrap-server 10.53.47.199:9092 --topic nameOfTopic --from-begining
+
+docker-compose up -d    в директории с docker-compose.yml для запуска зукипер и кафка
