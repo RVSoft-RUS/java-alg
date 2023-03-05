@@ -1,0 +1,8 @@
+Конфигурация копирайтов в IDEA
+
+1. Открыть File->Settings->Editor->Copyright->Copyright Profiles
+2. Нажать Add () для создания нового Copyright профиля, назовем его VTB.
+3. Заполнить поля следующим образом:
+VTB Group. Do not reproduce without permission in writing.
+Copyright (c) $today.year VTB Group. All rights reserved.
+4. Подняться на уровень выше: Settings->Editor->Copyright и выбрать созданный профиль по-умолчанию.
