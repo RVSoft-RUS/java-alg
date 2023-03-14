@@ -1,0 +1,18 @@
+STATEMENT_BACKGROUND_OPERATION_EVENTS_TOPIC_NAME = "statement-BackgroundOperationEventDto"
+STATEMENT_RENDER_REQUEST_TOPIC_NAME = "statement-StatementRenderDto"
+ACCOUNT_STATISTICS_KAFKA_TOPIC = "stmt-account-statistics-topic"
+FILTER_KAFKA_TOPIC = "StatementFilter"
+CONTRACTOR_NEW_STATEMENT_TOPIC = "stmt-contractor-new-statement-topic"
+
+  #descr: Имя топика кафка для отправки информации о поступлении извещений и уведомлений
+    notification_notice_request
+  #descr: Наименование топика Кафка для отправки уведомлений в host-to-host о получении всех запрошенных выписок из АБС
+    stmt_h2h_refresh_topic
+
+   FRAUD_MONITORING_TOPIC = "statements"; ???
+
+
+   background-operations:
+  enabled: 'false'
+  kafka: 'kafka-service:9092'
+  status-topic-name: 'background-operations-statement'

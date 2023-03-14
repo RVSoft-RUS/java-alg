@@ -1,0 +1,1 @@
+@EnableWebSecurity(debug = true) -  все подробности в консоль

@@ -1,4 +1,12 @@
 -XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/home/path/dump.hprof
+
+jps - выведет все процессы с их id (PID)
+jcmd pid GC.heap_dump <file_path> - создать heap_dump процесса pid
+
+-verbose:gc - включить логи сборщика мусора
+-Xlog:gc:/home/path/gc.log
+GCViewer - визуализация логов
 
     По статистике OpenJDK таких случаев мало, поэтому StringDeduplication по умолчанию отключен. Для активации добавьте при запуске VM флажок:
 -XX:+UseStringDeduplication
