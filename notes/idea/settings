@@ -1,1 +1,3 @@
 Tools/Server Certificates - Accept non-trusted certificates automatically
+
+Help > Edit Custom VM Options...    -Xmx4096m
