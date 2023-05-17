@@ -1,0 +1,37 @@
+select accountdto0_.id as id1_2_
+	 , accountdto0_.abs_notification as abs_noti2_2_
+	 , accountdto0_.account_active_passive as account_3_2_
+	 , accountdto0_.account_balance_dto_id as account_4_2_
+	 , accountdto0_.account_name as account_5_2_
+	 , accountdto0_.account_number as account_6_2_
+	 , accountdto0_.account_type_dto_id as account_7_2_
+	 , accountdto0_.bic as bic8_2_
+	 , accountdto0_.block_date as block_da9_2_
+	 , accountdto0_.block_reason as block_r10_2_
+	 , accountdto0_.block_type as block_t11_2_
+	 , accountdto0_.branch_common_dto_id as branch_12_2_
+	 , accountdto0_.client_kpp as client_13_2_
+	 , accountdto0_.close_date as close_d14_2_
+	 , accountdto0_.comment as comment15_2_
+	 , accountdto0_.cur_alphabetic_code as cur_alp16_2_
+	 , accountdto0_.cur_numeric_code as cur_num17_2_
+	 , accountdto0_.currency as currenc18_2_
+	 , accountdto0_.fbank as fbank19_2_
+	 , accountdto0_.irreducable_sum_available as irreduc20_2_
+	 , accountdto0_.kib_available as kib_ava21_2_
+	 , accountdto0_.last_modify_date as last_mo22_2_
+	 , accountdto0_.master_abs as master_23_2_
+	 , accountdto0_.money_owner_deputed_acc as money_o24_2_
+	 , accountdto0_.open_date as open_da25_2_
+	 , accountdto0_.overnight_account as overnig26_2_
+	 , accountdto0_.payer_deputed_acc as payer_d27_2_
+	 , accountdto0_.third_acc_bankru_bic as third_a28_2_
+	 , accountdto0_.third_party_account as third_p29_2_
+	 , accountdto0_.version as version30_2_
+	 , accountdto0_.visible_for_dbo as visible31_2_
+  from stmt.st_acc_account_dto accountdto0_
+ where accountdto0_.branch_common_dto_id = $1
+   and accountdto0_.third_party_account = $3
+   and accountdto0_.visible_for_dbo = $4
+ order by accountdto0_.id asc
+ limit $2;

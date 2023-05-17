@@ -1,0 +1,83 @@
+select registerfo0_.id as id1_82_
+     , registerfo0_.archive_date as archive_2_82_
+     , registerfo0_.branch_ext_id as branch_e3_82_
+     , registerfo0_.channel as channel4_82_
+     , registerfo0_.client_ext_id as client_e5_82_
+     , registerfo0_.create_date as create_d6_82_
+     , registerfo0_.delete_date as delete_d7_82_
+     , registerfo0_.document_date as document8_82_
+     , registerfo0_.document_number as document9_82_
+     , registerfo0_.document_number_as_num as documen10_82_
+     , registerfo0_.edoc_ref_id as edoc_re11_82_
+     , registerfo0_.exporting_to_abs as exporti12_82_
+     , registerfo0_.import_date as import_13_82_
+     , registerfo0_.last_modify_date as last_mo14_82_
+     , registerfo0_.last_modify_user_ext_id as last_mo15_82_
+     , registerfo0_.last_modify_user_snapshot as last_mo16_82_
+     , registerfo0_.note_from_receiver as note_fr17_82_
+     , registerfo0_.read as read18_82_
+     , registerfo0_.receive_date as receive19_82_
+     , registerfo0_.send_date as send_da20_82_
+     , registerfo0_.source_id as source_21_82_
+     , registerfo0_.status_action as status_22_82_
+     , registerfo0_.status_bank_backend_response_message as status_23_82_
+     , registerfo0_.status_base as status_24_82_
+     , registerfo0_.status_comment as status_25_82_
+     , registerfo0_.status_extended as status_26_82_
+     , registerfo0_.note_from_bank_author as note_fr27_82_
+     , registerfo0_.note_from_bank_comment as note_fr28_82_
+     , registerfo0_.note_from_bank_create_date as note_fr29_82_
+     , registerfo0_.note_from_bank_fio as note_fr30_82_
+     , registerfo0_.type_id as type_id31_82_
+     , registerfo0_.uuid as uuid32_82_
+     , registerfo0_.abs_client_id as abs_cli33_82_
+     , registerfo0_.abs_file_number as abs_fil34_82_
+     , registerfo0_.agreement_date as agreeme35_82_
+     , registerfo0_.agreement_number as agreeme36_82_
+     , registerfo0_.assignee_additional_phone_number as assigne37_82_
+     , registerfo0_.assignee_email as assigne38_82_
+     , registerfo0_.assignee_id as assigne39_82_
+     , registerfo0_.assignee_name as assigne40_82_
+     , registerfo0_.assignee_phone_country_iso_code as assigne41_82_
+     , registerfo0_.assignee_phone_code as assigne42_82_
+     , registerfo0_.assignee_phone_number as assigne43_82_
+     , registerfo0_.attachment_id as attachm77_82_
+     , registerfo0_.document_number_is_manually as documen44_82_
+     , registerfo0_.enrollment_type as enrollm45_82_
+     , registerfo0_.external_id as externa46_82_
+     , registerfo0_.file_name as file_na47_82_
+     , registerfo0_.file_name_manually as file_na48_82_
+     , registerfo0_.global_income_type_flag as global_49_82_
+     , registerfo0_.import_session_id as import_50_82_
+     , registerfo0_.jpa_version as jpa_ver51_82_
+     , registerfo0_.migration_created as migrati52_82_
+     , registerfo0_.migration_deleted as migrati53_82_
+     , registerfo0_.migration_updated as migrati54_82_
+     , registerfo0_.bank_payer_branch_bik as bank_pa55_82_
+     , registerfo0_.bank_payer_branch_id as bank_pa56_82_
+     , registerfo0_.bank_payer_branch_name as bank_pa57_82_
+     , registerfo0_.organization_id as organiz58_82_
+     , registerfo0_.organization_inn as organiz59_82_
+     , registerfo0_.organization_kpp as organiz60_82_
+     , registerfo0_.organization_name as organiz61_82_
+     , registerfo0_.organization_okpo as organiz62_82_
+     , registerfo0_.payment_currency_code as payment63_82_
+     , registerfo0_.payment_date as payment64_82_
+     , registerfo0_.payment_income_type_code as payment65_82_
+     , registerfo0_.payment_number as payment66_82_
+     , registerfo0_.payment_purpose as payment67_82_
+     , registerfo0_.payroll_amount as payroll68_82_
+     , registerfo0_.primary_doc_id as primary69_82_
+     , registerfo0_.ready_employee_results as ready_e70_82_
+     , registerfo0_.reporting_period_month as reporti71_82_
+     , registerfo0_.reporting_period_year as reporti72_82_
+     , registerfo0_.salary_account as salary_73_82_
+     , registerfo0_.statement_input_mode as stateme74_82_
+     , registerfo0_.total as total75_82_
+     , registerfo0_.value_date as value_d76_82_
+  from salary_regs.regs_salary_register_for_salary registerfo0_
+ where ( registerfo0_.delete_date is NULL)
+   and (0=1 or 1=1 and 1=1)
+   and registerfo0_.abs_client_id=$1
+   and registerfo0_.file_name=$2
+   and (registerfo0_.document_date between $3 and $4);
