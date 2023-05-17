@@ -16,3 +16,8 @@ CONTRACTOR_NEW_STATEMENT_TOPIC = "stmt-contractor-new-statement-topic"
   enabled: 'false'
   kafka: 'kafka-service:9092'
   status-topic-name: 'background-operations-statement'
+
+========================================================================================================================
+static final String COMMON_STATUS_REQUEST = "receipt-adapter-status-request";  - запрос статуса
+static final String COMMON_STATUS_RESPONSE = "receipt-adapter-status-response"; - ответ на запрос статуса
+static final String COMMON_STATUS_PUBLISH = "receipt-adapter-status-publish"; - асинхронная публикация статуса
