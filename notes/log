@@ -7,3 +7,9 @@
     для формата .properties или XML соответственно.
  -   Загрузить конфигурацию из файла в формате XML или .properties: log4j ищет файл конфигурации в classpath.
     Сначала ищется файл log4j.xml и, если таковой не найден, - файл log4j.properties.
+
+log sql
+spring.jpa.show-sql: 'false' изменить на true
+logging.level.org.springframework.transaction.interceptor: TRACE чтобы видеть где транзакции открываются
+logging.level.org.springframework.orm.jpa: DEBUG
+logging.level.org.springframework.transaction: DEBUG
