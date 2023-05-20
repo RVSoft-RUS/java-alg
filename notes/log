@@ -10,6 +10,6 @@
 
 log sql
 spring.jpa.show-sql: 'false' изменить на true
-logging.level.org.springframework.transaction.interceptor: TRACE чтобы видеть где транзакции открываются
+logging.level.org.springframework.transaction.interceptor: TRACE //чтобы видеть где транзакции открываются
 logging.level.org.springframework.orm.jpa: DEBUG
 logging.level.org.springframework.transaction: DEBUG
