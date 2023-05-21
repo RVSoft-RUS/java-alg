@@ -1,6 +1,8 @@
 package singleton;
 
-public class ClassSingleton6 { //лучше делать final
+import java.io.Externalizable;
+
+public class ClassSingleton6  { //лучше сделать final и запретить сериализацию implements Externalizable throw UnsupportOperEx
     private static volatile ClassSingleton6 instance;
     private final String info = "использование volatile модификатора может привести" +
             " к проблемам производительности на мультипроцессорных системах";
