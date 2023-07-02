@@ -3,3 +3,12 @@
     docker run -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres       |   (latest)
 
 https://www.youtube.com/watch?v=dDryrO8y82c - Иван Фролков хорошие доклады про postgres
+
+select count(*) from stmt.st_contractor_statement;--5966550 6 секунд
+select  reltuples from pg_class where oid = 'stmt.st_contractor_statement'::regclass;--5966550  < 1 секундs
+
+select * from pg_catalog.pg_stat_activity where state = 'active';--неисправности, сколько работает
+select * from pg_catalog.pg_locks; --блокировки
+-- Найти ID заблокированной таблицы;
+-- Найти ID транзакции, которая зависла;
+-- Попытаться остановить её корректно, прервать в случае оказания сопротивления.
