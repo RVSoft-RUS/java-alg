@@ -1,0 +1,15 @@
+                CREATE INDEX ${prefix}_aoperation_ground_idx
+                ON stmt.${prefix}_aoperation
+                USING GIN (ground extensions.gin_trgm_ops)
+                WITH (fastupdate = off);
+
+                -- 10. создание схемы-плейсхолдера для расширений
+                create schema extensions;
+                grant usage on schema extensions to public;
+                grant execute on all functions in schema extensions to public;
+                alter default privileges in schema extensions grant execute on functions to public;
+                alter default privileges in schema extensions grant usage on types to public;
+
+                -- 11. установка расширения в схему extensions
+                CREATE EXTENSION IF NOT EXISTS pg_trgm;
+                ALTER EXTENSION pg_trgm SET SCHEMA extensions;
