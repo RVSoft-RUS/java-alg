@@ -1,0 +1,11 @@
+Remote Debug
+в кубере ? -> copy login command выполнить все комманды
+в идее -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081
+выставить значение в deployments -> выбрать сервис -> YAML:
+env:
+            - name: JAVA_OPTIONS
+              value: >-
+                -Duser.timezone=Europe/Moscow  -XX:+PrintFlagsFinal
+                -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+SAVE - дождаться рестарта поды
+kubectl -n dk5-dbor03-dbor-stmt1-dev2 port-forward statement-545cf748dc-lmrlw 8081:5005
