@@ -1,24 +1,2 @@
 Создание библиотеки в стиле Spring Data Repository своими руками при помощи Dynamic Proxy и Spring IoC
 https://habr.com/ru/post/458548/
-
-import java.io.File;
-
-public class Randomize {
-    private final File dirWithMusic;
-
-    public Randomize(File dirWithMusic) {
-        if (dirWithMusic == null) {
-            throw new IllegalStateException("Not a music!");
-        }
-        if (!dirWithMusic.isDirectory()) {
-            throw new IllegalStateException("Not a directory!");
-        }
-        this.dirWithMusic = dirWithMusic;
-    }
-
-    public static void main(String[] args) {
-        String dir = (String) System.getProperties().get("user.dir");
-        System.out.println(dir);
-        Randomize randomize = new Randomize(new File(dir));
-    }
-}
