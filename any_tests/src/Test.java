@@ -10,7 +10,7 @@ public class Test {
         System.out.println(s + ", " + s1);
     }
 
-public Payment.TypeEnum calculate(PaymentOrderTypeEsb po) {
+    public Payment.TypeEnum calculate(PaymentOrderTypeEsb po) {
         String account = Optional.ofNullable(po.getPayee().getNumber())
                 .map(AccountNumberTypeEsb::getAccountNumber20Digit).orElse("");
         if (OPERATION_ASSIGNMENT_RESERVE.equals(po.getOperationAssignment())) {
