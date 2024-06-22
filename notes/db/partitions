@@ -23,6 +23,8 @@ create rule news_ins_to_2 as on INSERT to news
     where category_id = 2
     do instead insert into news_2 values (new.*);
 
+select * from pg_rules where tablename = 'news';
+
 insert into news (id, category_id, title) VALUES (1, 1, '001');
 insert into news (id, category_id, title) VALUES (2, 2, '002');
 insert into news (id, category_id, title) VALUES (3, 3, '003');
