@@ -1,0 +1,33 @@
+create table news
+(
+    id          integer not null
+        constraint news_pk
+            primary key,
+    category_id integer,
+    title       VARCHAR
+);
+
+create table news_1
+    (check ( category_id = 1 ))
+inherits (news);
+
+create table news_2
+    (check ( category_id = 2 ))
+inherits (news);
+
+create rule news_ins_to_1 as on INSERT to news
+    where category_id = 1
+    do instead insert into news_1 values (new.*);
+
+create rule news_ins_to_2 as on INSERT to news
+    where category_id = 2
+    do instead insert into news_2 values (new.*);
+
+insert into news (id, category_id, title) VALUES (1, 1, '001');
+insert into news (id, category_id, title) VALUES (2, 2, '002');
+insert into news (id, category_id, title) VALUES (3, 3, '003');
+
+select * from news;
+select * from news_2;
+
+explain analyse select * from news where category_id = 1;
