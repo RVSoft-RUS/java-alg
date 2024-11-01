@@ -1,0 +1,8 @@
+
+~/.jdks/liberica-21.0.5/bin/keytool -list -keystore "C:\Users\MAC\.jdks\liberica-21.0.5\lib\security\cacerts" -storepass changeit
+
+~/.jdks/liberica-21.0.5/bin/keytool -import -trustcacerts -keystore "C:\Users\MAC\.jdks\liberica-21.0.5\lib\security\cacerts" -storepass changeit -noprompt -alias rshbdev_intermediate -file "C:\Users\MAC\Documents\cert\rshbdev.ru_Intermediate_Authority.crt"
+~/.jdks/liberica-21.0.5/bin/keytool -import -trustcacerts -keystore "C:\Users\MAC\.jdks\liberica-21.0.5\lib\security\cacerts" -storepass changeit -noprompt -alias nexus_rshbdev -file "C:\Users\MAC\Documents\cert\nexus.rshbdev.ru.crt"
+
+в Maven Runner VM Options
+-Djavax.net.ssl.trustStore="C:\Users\MAC\.jdks\liberica-21.0.5\lib\security\cacerts

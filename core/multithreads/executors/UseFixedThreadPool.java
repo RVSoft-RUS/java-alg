@@ -11,7 +11,7 @@ public class UseFixedThreadPool {
     static int TASK_COUNT = 40;
     static int TASK_SIZE = 1_000_000;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         withExecutor();
         withoutExecutor();
@@ -34,6 +34,7 @@ public class UseFixedThreadPool {
                 }
                 latch.countDown();
                 System.out.print("* ");
+                String s = randomText[random.nextInt(TASK_SIZE)];
             });
         }
 
@@ -52,6 +53,7 @@ public class UseFixedThreadPool {
                 randomText[j] = String.valueOf((char) random.nextInt(255));
             }
             System.err.print("* ");
+            String s = randomText[random.nextInt(TASK_SIZE)];
         }
     }
 }
