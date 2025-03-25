@@ -20,3 +20,12 @@ alter default privileges in schema extensions grant usage on types to public;
 -- 11. установка расширения в схему extensions
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 ALTER EXTENSION pg_trgm SET SCHEMA extensions;
+
+========================================================================
+CREATE INDEX idx_cust2 ON customer(active) INCLUDE (email);
+
+Этот индекс позволит PostgreSQL выполнять запросы типа SELECT email FROM customer WHERE active=0
+без обращения к основной таблице, что уменьшает дисковые операции и улучшает производительность.
+========================================================================
+PostgreSQL и Microsoft SQL Server позволяют построить выборочный индекс, в который попадут только строки, удовлетворяющие условию.
+В PostgreSQL такие индексы называются частичными (partial), а в Microsoft SQL Server — отфильтрованными (filtered)

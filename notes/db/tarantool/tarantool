@@ -1,1 +1,87 @@
 crud.truncate('название таблицы') очистить таблицу
+Для пользователя в ТСМ добавить права lua_call execute для crud.delete, crud.get, crud.replace, crud.select
+
+======migration create_BatchLoadInfo.lua================================================================================
+local helpers = require('tt-migrations.helpers')
+local config = require('config')
+local fun = require('fun')
+
+-- функция для определения имеет ли инстанс роль хранилища
+local function is_storage()
+    return fun.index('roles.crud-storage', config:get('roles')) ~= nil
+end
+
+local function up()
+    -- создаем спейс только на хранилищах
+    if is_storage() then
+        -- создаем спейс
+        local s = box.schema.space.create('BatchLoadInfo', {if_not_exists = true})
+
+        -- задаем формат для спейса
+        s:format({
+            { name = 'xRequestId', type = 'string' },
+            { name = 'batchId', type = 'uuid' },
+            { name = 'status', type = 'string' },
+            { name = 'bucket_id', type = 'unsigned' }
+        })
+        -- создаем первичный индекс, состоящий из двух полей
+        s:create_index('pk', { parts = {'batchId', 'xRequestId'}, if_not_exists = true, unique = true })
+        -- создаем индекс для работы шардирования
+        s:create_index('bucket_id', { parts = {'bucket_id'}, if_not_exists = true, unique = false })
+
+        -- объявляем поле batchId ключом шардирования
+        helpers.register_sharding_key(s.name, {'batchId'})
+    end
+
+    return true
+end
+
+return {
+    apply = {
+        scenario = up,
+    },
+}
+
+
+======migration create_BatchStatusInfo.lua==============================================================================
+local helpers = require('tt-migrations.helpers')
+local config = require('config')
+local fun = require('fun')
+
+-- функция для определения имеет ли инстанс роль хранилища
+local function is_storage()
+    return fun.index('roles.crud-storage', config:get('roles')) ~= nil
+end
+
+local function up()
+    -- создаем спейс только на хранилищах
+    if is_storage() then
+        -- создаем спейс
+        local s = box.schema.space.create('BatchStatusInfo', {if_not_exists = true})
+
+        -- задаем формат для спейса
+        s:format({
+            { name = 'batchId', type = 'uuid' },
+            { name = 'status', type = 'string' },
+            { name = 'createdAt', type = 'datetime' },
+            { name = 'bucket_id', type = 'unsigned' }
+        })
+        -- создаем первичный индекс
+        s:create_index('pk', { parts = {'batchId'}, if_not_exists = true, unique = true })
+        -- создаем индекс для работы шардирования
+        s:create_index('bucket_id', { parts = {'bucket_id'}, if_not_exists = true, unique = false })
+        -- создаем индекс для работы устаревания данных
+        s:create_index('createdAt', { parts = {'createdAt'}, if_not_exists = true, unique = false })
+
+        -- объявляем поле batchId ключом шардирования
+        helpers.register_sharding_key(s.name, {'batchId'})
+    end
+
+    return true
+end
+
+return {
+    apply = {
+        scenario = up,
+    },
+}
