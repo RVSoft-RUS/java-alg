@@ -5,3 +5,23 @@ SELECT count(distinct col_name) -   кол-во уникальных
 Группировка по 15 минут (MS SQL)
 DATEDIFF(second, {d'1970-01-01'}, getDate() или дата тз табл)/900
 DATEADD(second, N * 900, {d'1970-01-01'})   -   обратно
+
+Пример наполнения
+    WITH RECURSIVE t(n) AS (
+        SELECT 0
+        UNION ALL
+        SELECT n + 1 FROM t WHERE n < 99999
+    )
+    INSERT INTO owf_ms_prd_operations.r_operations_client_extsys (
+        id, client_id, system_id, object_id, system_node_id, source_system, change_date_time
+    )
+    SELECT
+        gen_random_uuid(),
+        gen_random_uuid(),
+        'CFT',
+        (577777777 + n)::text,
+        'CFT',
+        'CFT',
+        '2024-10-04 10:12:04.136 +0300'
+    FROM t;
+
