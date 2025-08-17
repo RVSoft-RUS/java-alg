@@ -29,7 +29,16 @@ public class MergeSortedArray {
         }
     }
 
+    static int base = 10;
+
+    public static int increment() {
+        return ++base;
+    }
+
     public static void main(String[] args) {
+        System.out.println(increment());
+        System.out.println(increment());
+
         int[] nums1 = new int[]{0};
         int[] nums2 = new int[]{1};
         merge(nums1, 0, nums2, 1);

@@ -1,0 +1,116 @@
+- границы транзакций. На единичной операции не надо. На каком уровне (service)
+- SELECT * избегать, указывать только нужные поля
+- Нежалательно использовать сырой SQL, лучше фреймворк или билдеры
+
+
+## 1. Архитектура и дизайн
+
+- Соответствие проекту архитектурным стандартам компании.
+- Логичность структуры пакетов и модулей.
+- Грамотное разделение обязанностей между слоями приложения.
+- Корректность использования паттернов проектирования (SOLID, MVC, Strategy, Observer и др.).
+- Правильное применение IoC и DI (Dependency Injection).
+- Избежание анти-паттернов (God Object, Spaghetti Code и др.).
+- Наличие и адекватность слоев обслуживания (service layer, DAO, controller).
+- Разделение прикладной логики и инфраструктуры.
+
+## 2. Обработка ошибок и исключений
+
+- Правильное использование исключений (checked/unchecked exceptions).
+- Четкое разграничение исключений на уровне домена и инфраструктуры.
+- Избежание подавления исключений без обработки.
+- Следование конвенциям именования исключений.
+- Уведомление пользователя о проблеме в удобоваримой форме.
+- Документирование возможных ошибок и их причин.
+- Понятность сообщений исключений.
+- Наличие логирования исключений.
+
+## 3. Работу с базами данных
+
+- Использование transaction boundaries (границы транзакций).
+- Грамотное использование аннотаций @Transactional.
+- Правильное закрытие соединений с базой данных.
+- Обработка дедлоков и оптимистичных конкурентных конфликтов.
+- Создание и эффективное использование индексов.
+- Рациональное проектирование запросов и оптимизация SQL.
+- Отсутствие прямых SQL-запросов в коде (использование ORM, Query Builder и т.д.).
+- Устранение «медленных» запросов.
+- Управление количеством соединений с базой данных.
+- Использование connection pools.
+- Внимание к нормализации данных и целостности (отношения, индексы, ограничения).
+
+## 4. Безопасность
+
+- Обеспечение конфиденциальности данных (защита от утечек).
+- Использование шифрования чувствительной информации.
+- Применение white-list подход (валидировать входящие данные, использовать black-list только как дополнение).
+- Устранение XSS, CSRF атак.
+- Задавание ролей и привилегий пользователей.
+- Авторизация и аутентификация пользователей.
+- Safeguards против SQL injection и аналогичных угроз.
+- Secure handling of passwords (hashing, salting).
+- Access control (RBAC, ACL).
+
+## 5. Обработка данных и типов
+
+- Использовать примитивные типы там, где это уместно.
+- Соблюдать соглашения по именованию классов, методов и переменных.
+- Избегать магических чисел и hard-coded значений.
+- Use proper types for money (BigDecimal vs float/double).
+- Utilize enums для перечисляемых состояний.
+- Avoid primitive obsession (overuse of primitives instead of domain objects).
+- Корректное использование Null-Safety и Optionals.
+
+## 6. Юнит-тестирование и CI/CD
+
+- Покрытие критических участков кода тестами.
+- Проверка работоспособности и стабильности методов.
+- Интеграционные тесты для пограничных случаев.
+- Unit tests покрывают happy-path и edge cases.
+- Writing meaningful assertions (assertThat, hamcrest matchers etc.).
+- Использование mocking frameworks для изоляции зависимостей.
+- Monitoring coverage reports.
+- Integration testing (REST endpoints, DB interactions).
+- Deployment pipeline integrity.
+
+## 7. Логирование и мониторинг
+
+- Четкое и структурированное логирование.
+- Консистентность уровней логирования (INFO, ERROR, DEBUG и т.д.).
+- Сокращение шума в логах.
+- Предупреждение и своевременное уведомление о критических событиях.
+- Logging sensitive information securely (mask PII data).
+- Соблюдение стандартов logging format (JSON, structured logging).
+- Use of centralized logging systems (ELK stack, Splunk etc.).
+
+## 8. Производительность и масштабируемость
+
+- Профилирование кода и выявление бутылочных горлышек.
+- Мониторинг и сокращение расходов памяти (GC overhead).
+- Scalability concerns (vertical/horizontal scaling, caching layers).
+- Application health monitoring.
+- Benchmarking critical methods and components.
+- Оптимизация многопоточности и параллелизма.
+- Minimize blocking I/O calls.
+- Reduce unnecessary allocations and garbage collection.
+
+## 9. Качество кода и best practices
+
+- Читаемость и понятность кода.
+- Commenting code effectively (what, why, how).
+- Adherence to company coding standards.
+- Usage of standard libraries and tools.
+- Efficient use of lambdas and streams.
+- Regular code refactoring.
+- Consistent naming conventions.
+- Limitation of cyclomatic complexity.
+- Documentation and clarity of complex logic.
+
+## 10. Общие советы по оформлению
+
+- Чистота и аккуратность оформления кода.
+- Следование соглашению об отступах и стилях (indentation, braces placement).
+- Минимизация дублирования кода (DRY principle).
+- Использование аннотаций там, где это целесообразно (@Nonnull, @Deprecated и т.д.).
+- Readability through clear variable names and function signatures.
+- Правильное использование аннотаций для тестирования и логирования.
