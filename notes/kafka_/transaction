@@ -1,0 +1,63 @@
+Kafka транзакции решают две задачи:
+
+Атомарная публикация — связывают несколько отправок сообщений продюсером в одну операцию «всё или ничего»
+Атомарность чтения-записи — для сервисов, которые одновременно являются консьюмерами и продюсерами, связывают отправку сообщений и коммит оффсетов в единый шаг
+
+Чтобы включить транзакции, нам необходимо прописать в application.properties продюсера следующие строчки:
+spring.kafka.producer.properties.enable.idempotence=true
+spring.kafka.producer.properties.transactional.id=some-service-${random.value}-
+
+Чтобы консьюмеры не видели сообщения из откатившихся транзакций, нужно установить соответствующий уровень изоляции:
+spring.kafka.consumer.isolation-level=read_committed
+
+Без транзакций: один продюсер на всех
+Когда транзакции выключены, ProducerFactory создаёт единственный KafkaProducer,
+который безопасно используется всеми потоками через KafkaTemplate. Нет транзакционного состояния — нет проблем.
+
+С транзакциями: пул продюсеров
+С включением транзакций один продюсер не подходит — он не может параллельно обрабатывать несколько транзакций.
+ Поэтому ProducerFactory переходит в транзакционный режим и создаёт пул продюсеров.
+
+Каждый из таких продюсеров получает свой transactional.id. В нашем случае мы задаём его в виде префикса c помощью следующей строчки:
+
+spring.kafka.producer.properties.transactional.id=some-service-${random.value}-
+
+Spring Boot использует этот префикс и добавляет к нему суффикс, формируя уникальные transactional.id для каждого продюсера в пуле.
+
+Проблема: несколько инстансов приложения
+Что если у вас запущено несколько инстансов одного сервиса? Без случайной части в префиксе их transactional.id начнут совпадать:
+
+Инстанс 1: some-service-0, some-service-1
+Инстанс 2: some-service-0, some-service-1
+
+Именно поэтому в префикс добавляется ${random.value}. Оно гарантирует,
+что для каждого инстанса приложения transactional.id будет уникальным, а значит,
+Kafka не будет блокировать продюсеров из-за конфликтов по epoch.
+
+В production для избежания этого можно давать каждому инстансу уникальный, но фиксированный transaction-id.
+Для этого можно использовать, например, StatefulSet в K8s. Тогда каждый под сохраняет имя при перезапусках.
+Соответственно, вместо ${random.value} можно использовать ${POD_NAME}. Таким образом, при перезапуске продюсера,
+который упал на середине транзакции, Kafka увидит тот же transaction-id и выдаст перезапущенному сервису новый epoch.
+Транзакции предыдущего продюсера (со старым epoch) будут отменены немедленно, и консьюмерам не придётся
+ждать истечения transaction.timeout.ms.
+
+@Bean
+public KafkaTransactionManager<String, Object> kafkaTransactionManager(
+        ProducerFactory<String, Object> producerFactory
+) {
+    return new KafkaTransactionManager<>(producerFactory);
+}
+
+@Transactional
+public void publishOrderResult(OrderRequest orderRequest) {
+    String orderId = UUID.randomUUID().toString();
+    OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent(
+        orderId,
+        orderRequest.email(),
+        orderRequest.productName(),
+        orderRequest.quantity()
+    );
+
+    kafkaTemplate.send("order-placed", orderPlacedEvent.orderId(), orderPlacedEvent);
+    kafkaTemplate.send("order-audit", orderPlacedEvent.orderId(), orderPlacedEvent);
+}

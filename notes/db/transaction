@@ -1,0 +1,75 @@
+Гибкое управление транзакциями
+
+@Bean
+public TransactionTemplate transactionTemplate(PlatformTransactionManager txManager) {
+    TransactionTemplate template = new TransactionTemplate(txManager);
+    template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+    template.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+    template.setTimeout(30); // секунды
+    return template;
+}
+
+public void processOrder(OrderPlacedEvent event) {
+    // 1. Подготовительные операции БЕЗ транзакции
+    validateEvent(event);
+    logEvent(event);
+
+    // 2. Основная логика В транзакции
+    transactionTemplate.executeWithoutResult(status -> {
+        processOrderInTransaction(event);
+    });
+
+    // 3. Пост-обработка ПОСЛЕ транзакции
+    sendNotification();  // Гарантированно после commit!
+    updateCache();       // Только если транзакция успешна
+}
+
+Проблемы @Transactional, которые решает TransactionTemplate:
+
+@Transactional
+public void problematicMethod() {
+    prepareData();           // 1. Выполняется в транзакции
+    sendMessageToQueue();    // 2. Если упадет здесь → транзакция откатится
+    updateDatabase();        // 3. Но сообщение уже отправлено!
+}
+
+// Разные настройки для разных операций
+transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+    @Override
+    protected void doInTransactionWithoutResult(TransactionStatus status) {
+        try {
+            processOrderInTransaction(event);
+        } catch (OptimisticLockingFailureException e) {
+            status.setRollbackOnly(); // Явный контроль rollback
+        }
+    }
+});
+
+transactionTemplate.setTimeout(10); // 10 секунд, потом TimeoutException
+
+transactionTemplate.executeWithoutResult(status -> {
+    processOrderInTransaction(event);  // Если бросит RuntimeException → rollback
+    // Явный rollback при необходимости
+    if (someCondition) {
+        status.setRollbackOnly();  // Помечаем для отката
+    }
+});
+
+Критерий	 |   @Transactional	            |   TransactionTemplate
+-------------------------------------------------------------------------
+Контроль	 |   Декларативный (аннотации)	|   Программный
+Границы	     |   На уровне метода	        |   Точные границы в коде
+Гибкость	 |   Одинаковая для всех методов|   Разная для каждого вызова
+Тестирование |	 Требует Spring контекст	|       Легче мокировать
+
+Когда использовать TransactionTemplate:
+✅ Хорошо:
+Явный контроль границ транзакции
+Несколько транзакций в одном методе
+Специфичные настройки для разных операций
+Тестирование без Spring контекста
+
+❌ Избегать:
+Простые CRUD операции
+Когда достаточно @Transactional
+В контроллерах или других не-Spring компонентах
