@@ -33,3 +33,16 @@ select * from news;
 select * from news_2;
 
 explain analyse select * from news where category_id = 1;
+
+или декларативное партиционирование
+-- Создаем партиционированную таблицу
+CREATE TABLE ${data_prefix}_operations_pc_full (
+    object_id VARCHAR NOT NULL,
+    operation_date_time TIMESTAMP,
+    -- другие колонки
+) PARTITION BY RANGE (operation_date_time);
+
+-- Создаем партиции
+CREATE TABLE ${data_prefix}_operations_pc_full_2025_01
+PARTITION OF ${data_prefix}_operations_pc_full
+FOR VALUES FROM ('2025-01-01') TO ('2025-02-01');
